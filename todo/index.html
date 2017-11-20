@@ -1,5 +1,12 @@
 <html>
     <head>
+        <style>
+            img {width:24px;vertical-align:middle;margin-left:15px;margin-right:15px;}
+            span {vertical-align:middle}
+            .list {height:30px;}
+            .list img {width:30px}
+            .count {position:absolute;right:50px;color:gray}
+        </style>
         <script
         src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -7,26 +14,34 @@
     </head>
     <body>
         <div>
-            <div id="total" style="width:100%">
-                <img src="" alt="To-do icon">
+            <div id="total" style="width:100%;height:30px">
+                <img src="TodoIcon.svg" alt="To-do icon">
                 <span>To-Do</span>
-                <span style="color:gray"></span>
+                <span id="totalCount" class="count"></span>
             </div>
-            <div id="list" style="width:100%">
-                <img src="" alt="">
-                <span></span>
-                <span style="color:gray"></span>
+            <div id="listOuter" style="width:100%">
+
             </div>
-            <div style="width:100%">
-                <img src="" alt="+icon">
+            <div style="width:100%;position:fixed;bottom:0;left:0">
+                <img src="plusIcon.svg" alt="+icon">
                 <span style="color:blue">새 목록</span>
             </div>
         </div>
         <script>
-            $.getJSON("./jsonData/groupList.json",function($data, status){
+            $.get("http://kdy0962.github.io/todo/jsonData/groupList.json",function($data, status){
                 
                 console.log($data);
-
+                var totalCount=0;
+                for(i=0;i<$data.data.length;i++){
+                    var lists = "";
+                    totalCount += $data.data[i].count;
+                    lists +='<div class="list">'+'<img src="'+'listIcon.svg" style="fill:'+$data.data[i].color+'" alt="list'+$data.data[i].id+' image">'
+                    lists +='<span class="name">'+$data.data[i].name+'</span>'
+                    lists +='<span class="count">'+$data.data[i].count+'</span>'
+                    lists+='</div>'
+                    $("#listOuter").append(lists);
+                }
+                $("#totalCount").append(totalCount);
             });
         </script>
     </body>
