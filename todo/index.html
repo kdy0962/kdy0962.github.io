@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div>
+            <div id="total" style="width:100%">
+                <img src="" alt="To-do icon">
+                <span>To-Do</span>
+                <span style="color:gray"></span>
+            </div>
+            <div id="list" style="width:100%">
+                <img src="" alt="">
+                <span></span>
+                <span style="color:gray"></span>
+            </div>
+            <div style="width:100%">
+                <img src="" alt="+icon">
+                <span style="color:blue">새 목록</span>
+            </div>
+        </div>
+        <script>
+            $.getJSON("./jsonData/groupList.json",function($data, status){
+                
+                console.log($data);
+
+            });
+        </script>
+    </body>
+</html>
