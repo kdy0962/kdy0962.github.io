@@ -36,8 +36,8 @@
                 // console.log('this.urls[url_index]', this.urls[url_index]);
                 location.href = this.urls[url_index];
             };
-
-            $.get("http://kdy0962.github.io/todo/jsonData/groupList.json",function($data, status){
+            function makeList($url){
+                $.get($url,function($data, status){
                 for(i=0;i<$data.data.length;i++){
                     var lists = "";
                     urls[i] = 'http://kdy0962.github.io/todo/list.html'+encodeURI('?name='+$data.data[i].name);
@@ -48,25 +48,15 @@
                     $("#listOuter").append(lists);
                 }
             });
+            }
+
+            makeList("http://kdy0962.github.io/todo/jsonData/groupList.json");
+            
 
             $('#addList').click(function(){
                 var name = prompt("새 목록 이름을 입력하세요.");
-                $.get("http://kdy0962.github.io/todo/jsonData/groupAdd.json",{name:name},function($data, status){
-                
-
-                    $("#listOuter").empty();
-                    $("#totalCount").empty();
-
-                    for(i=0;i<$data.data.length;i++){
-                        var lists = "";
-                        
-                        lists +='<div class="list">'+'<img src="'+'listIcon.svg" style="fill:'+$data.data[i].color+'" alt="list'+$data.data[i].id+' image">'
-                        lists +='<span class="name">'+$data.data[i].name+'</span>'
-                        lists +='<span class="count">'+$data.data[i].count+'</span>'
-                        lists +='</div>'
-                        $("#listOuter").append(lists);
-                    }
-                });
+                $("#listOuter").empty();
+                makeList("http://kdy0962.github.io/todo/jsonData/groupAdd.json");
             });
         </script>
     </body>
