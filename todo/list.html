@@ -12,7 +12,9 @@
                     /* Opera */width: -o-calc(100% - 120px);
                     /* Standard */width: calc(100% - 120px);
                     }
-                .name {margin-left:15px;vertical-align:middle;}
+                .task {height:30px}
+                a {text-decoration:none;}
+                .name {margin-left:15px;line-height:30px;display:block;float:left;position:relative;}
                 
             </style>
     </head>
@@ -54,7 +56,7 @@
                 for(i=0;i<$data.data.length;i++){
                     var tasks = "";
 
-                    tasks +='<div class="task">'+'<img class="iconImage" style="width:30px;height:30px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYR4sh0fM1Buy__0F9ea9VWazxLdfj9fV0dGCse3mMKiW5UVR-Yw" alt="">'
+                    tasks +='<div class="task">'+'<img class="iconImage" onclick="changeComplete(this)" style="width:30px;height:30px;float:left;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYR4sh0fM1Buy__0F9ea9VWazxLdfj9fV0dGCse3mMKiW5UVR-Yw" alt="unchecked">'
                     tasks +='<span class="name">'+$data.data[i].name+'</span>'
                     tasks+='</div>'
                     $("#tasks").append(tasks);
@@ -69,13 +71,31 @@
             $("#tasks").empty();
             makeTask("https://kdy0962.github.io/todo/jsonData/taskAdd.json");
         });
-
+        var uncheckedIcon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYR4sh0fM1Buy__0F9ea9VWazxLdfj9fV0dGCse3mMKiW5UVR-Yw"
         var checkedIcon = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ok_sign_font_awesome.svg/2000px-Ok_sign_font_awesome.svg.png";
         
-        $('.task img').click(function(){
-            this.css("src", checkedIcon);
-            this.parent().children(".name").css("text-decoration","line-through");
-        });
+        
+
+        function changeComplete2(){
+            $(document).on('click',event, function() {
+                var e = event.target;
+            e.attr("src", checkedIcon);
+            e.parent().children(".name").css("text-decoration","line-through");
+         });
+        }
+        
+        function changeComplete(self){
+            if($(self).attr("alt")=="unchecked"){
+                $(self).attr("alt","checked");
+                $(self).attr("src", checkedIcon);
+                $(self).parent().children(".name").css("text-decoration","line-through");
+            }else{
+                $(self).attr("alt","unchecked");
+                $(self).attr("src", uncheckedIcon);
+                $(self).parent().children(".name").css("text-decoration","none");
+            }
+            
+        };
     </script>
 
 </html>
