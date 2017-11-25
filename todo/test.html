@@ -1,0 +1,64 @@
+<html>
+    <head>
+               
+    </head>
+    <body>
+    
+    <style>
+        ul{list-style:none}
+    </style>
+                
+    <ul id = "list">
+    
+    </ul>
+    
+    <input type="button" id = "button" value="+ 새 목록">
+        
+            <script
+            src = "http://code.jquery.com/jquery-3.2.1.min.js"
+            integrity = "sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    
+    
+            <script>
+            
+            $.get("https://Gomgom1.github.io/todo/groupList.json",function(result, status){
+                console.log(result.data[0]);
+                var arr = result.data;
+                var list = "";
+                for(var i = 0; i<arr.length; i++){
+                    if (arr[i].icon=="home"){
+                    list += "<li>"+ '<span style="color:' + arr[i].color + '">&#9750;</span>' + arr[i].name + " " + arr[i].count + "</li>"
+                }else if(arr[i].icon=="sun"){
+                    list += "<li>"+ '<span style="color:' + arr[i].color + '">&#9788;</span>' + arr[i].name + " " + arr[i].count+ "</li>"
+                }else{
+                    list += "<li>"+ '<span style="color:' + arr[i].color + '">&#9776;</span>' + arr[i].name + " " + arr[i].count + "</li>"
+                }
+                }
+                $('#list').html(list);
+                $('#button').click(function(){
+                    var a, b;
+                    b = '제목 없는 목록';
+                    a = prompt('새 목록', b)
+                    
+                    $.post("https://Gomgom1.github.io/todo/groupList.json",
+                     { 
+                "id": arr.length, 
+                "name": a , 
+                "color": "blue", 
+                "icon": "list", 
+                "count": 0
+                },
+                 function(data) {
+                
+                
+                
+                });
+               
+            });
+            });
+            
+            </script>
+    </body>
+    
+    </html>
