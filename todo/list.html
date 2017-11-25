@@ -52,7 +52,7 @@
 
         
         function makeTask($url){
-            $.get($url,function($data, status){
+            $.get($url,function($data,{name:name} ,status){
                 for(i=0;i<$data.data.length;i++){
                     var tasks = "";
 
@@ -75,25 +75,20 @@
         var checkedIcon = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ok_sign_font_awesome.svg/2000px-Ok_sign_font_awesome.svg.png";
         
         
-
-        function changeComplete2(){
-            $(document).on('click',event, function() {
-                var e = event.target;
-            e.attr("src", checkedIcon);
-            e.parent().children(".name").css("text-decoration","line-through");
-         });
-        }
-        
         function changeComplete(self){
+            var complete=false;
             if($(self).attr("alt")=="unchecked"){
+                complete=true;
                 $(self).attr("alt","checked");
                 $(self).attr("src", checkedIcon);
                 $(self).parent().children(".name").css("text-decoration","line-through");
             }else{
+                complete=false;
                 $(self).attr("alt","unchecked");
                 $(self).attr("src", uncheckedIcon);
                 $(self).parent().children(".name").css("text-decoration","none");
             }
+            $.get("https://kdy0962.github.io/todo/jsonData/taskList.json",{complete:complete});
             
         };
     </script>

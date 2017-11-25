@@ -34,7 +34,7 @@
                 location.href = this.urls[url_index];
             };
             function makeList($url){
-                $.get($url,function($data, status){
+                $.get($url,function($data,{name:name},status){
                 for(i=0;i<$data.data.length;i++){
                     var lists = "";
                     urls[i] = 'https://kdy0962.github.io/todo/list.html'+encodeURI('?name='+$data.data[i].name);
