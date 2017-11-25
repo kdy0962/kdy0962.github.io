@@ -28,14 +28,20 @@
             </div>
         </div>
         <script>
+            this.urls = [];
+
+            function go_list(url_index){
+                console.log('url_index', url_index);
+                console.log('this.urls', this.urls);
+                console.log('this.urls[url_index]', this.urls[url_index]);
+                location.href = this.urls[url_index];
+            };
 
             $.get("http://kdy0962.github.io/todo/jsonData/groupList.json",function($data, status){
-                console.log('$data', $data);     
                 for(i=0;i<$data.data.length;i++){
                     var lists = "";
-                    this.url = 'http://kdy0962.github.io/todo/list.html'+encodeURI('?name='+$data.data[i].name);
-                    console.log('this.url', this.url);
-                    lists +='<div class="list" onclick="location.href=this.url">'+'<img src="'+'listIcon.svg" style="fill:'+$data.data[i].color+'" alt="list'+$data.data[i].id+' image">'
+                    urls[i] = 'http://kdy0962.github.io/todo/list.html'+encodeURI('?name='+$data.data[i].name);
+                    lists +='<div class="list" onclick="go_list('+i+')">'+'<img src="'+'listIcon.svg" style="fill:'+$data.data[i].color+'" alt="list'+$data.data[i].id+' image">'
                     lists +='<span class="name">'+$data.data[i].name+'</span>'
                     lists +='<span class="count">'+$data.data[i].count+'</span>'
                     lists+='</div>'
