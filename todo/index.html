@@ -31,9 +31,9 @@
             this.urls = [];
 
             function go_list(url_index){
-                console.log('url_index', url_index);
-                console.log('this.urls', this.urls);
-                console.log('this.urls[url_index]', this.urls[url_index]);
+                // console.log('url_index', url_index);
+                // console.log('this.urls', this.urls);
+                // console.log('this.urls[url_index]', this.urls[url_index]);
                 location.href = this.urls[url_index];
             };
 
@@ -56,7 +56,6 @@
 
                     $("#listOuter").empty();
                     $("#totalCount").empty();
-                    console.log("add먹음");
 
                     for(i=0;i<$data.data.length;i++){
                         var lists = "";
