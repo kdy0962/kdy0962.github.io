@@ -28,33 +28,57 @@
             </div>
         </div>
         <script>
+
             this.urls = [];
+            var URLS = {prefix:"https://kdy0962.github.io/todo/",
+                        list:"jsonData/groupList.json",
+                        eachList:"list.html",
+                        groupAdd:"jsonData/groupAdd.json"
+                        };
 
-            function go_list(url_index){
-                location.href = this.urls[url_index];
+            function eachList(name){
+                location.href = URLS.prefix + URLS.eachList+"?name="+encodeURIComponent(name);
             };
-            function makeList($url){
-                $.get($url,function($data,{name:name},status){
-                for(i=0;i<$data.data.length;i++){
-                    var lists = "";
-                    urls[i] = 'https://kdy0962.github.io/todo/list.html'+encodeURI('?name='+$data.data[i].name);
-                    lists +='<div class="list" onclick="go_list('+i+')">'+'<img src="'+'listIcon.svg" style="fill:'+$data.data[i].color+'" alt="list'+$data.data[i].id+' image">'
-                    lists +='<span class="name">'+$data.data[i].name+'</span>'
-                    lists +='<span class="count">'+$data.data[i].count+'</span>'
-                    lists+='</div>'
-                    $("#listOuter").append(lists);
-                }
-            });
-            }
+            
+            //공통 리스트그리기 로직
+            function renderList($data){
+                var data= $data.data,item,i;
+                $("#listOuter").empty();
 
-            makeList("https://kdy0962.github.io/todo/jsonData/groupList.json");
+                for(i=0;i<$data.data.length;i++){
+                    item = data[i];
+                    $("#listOuter").append(
+                        '<div class="list" onclick="eachList('+item.name+')">'
+                        +'<img src="'+'listIcon.svg" style="fill:'+item.color+'" alt="list'+item.id+' image">'
+                        +'<span class="name">'+item.name+'</span>'+'<span class="count">'+item.count+'</span>'+
+                        '</div>'
+                    );
+                
+                }
+            };
+            var init =(function(){
+                var isInited = false;
+                function init(){
+                    if(isInited) return; else isInited = true;
+
+                    //addList를 초기화한다.
+                    $('#addList').click(function(){
+                        var name = prompt("새 목록 이름을 입력하세요.");
+                        name = name.trim();
+                        if(!name && name.length<3){
+                            alert("할일을 적어주세요...2자 이상... 좀...");
+                            return;
+                        }
+                        $.get(URLS.prefix + URLS.groupAdd,{name:name}, renderList);
+                    });
+                    $.get(URLS.prefix + URLS.list, renderList);
+                };
+            })();
+            
+            init();
             
 
-            $('#addList').click(function(){
-                var name = prompt("새 목록 이름을 입력하세요.");
-                $("#listOuter").empty();
-                makeList("https://kdy0962.github.io/todo/jsonData/groupAdd.json");
-            });
+            
         </script>
     </body>
 </html>
