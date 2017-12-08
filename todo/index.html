@@ -29,13 +29,8 @@
         </div>
         <script>
 
-            this.urls = [];
-            var URLS = {prefix:"https://kdy0962.github.io/todo/",
-                        list:"jsonData/groupList.json",
-                        eachList:"list.html",
-                        groupAdd:"jsonData/groupAdd.json"
-                        };
-
+            //this.urls = [];
+            
             function eachList(name){
                 location.href = URLS.prefix + URLS.eachList+"?name="+encodeURIComponent(name);
             };
@@ -44,11 +39,10 @@
             function renderList($data){
                 var data= $data.data,item,i;
                 $("#listOuter").empty();
-
                 for(i=0;i<$data.data.length;i++){
                     item = data[i];
                     $("#listOuter").append(
-                        '<div class="list" onclick="eachList('+item.name+')">'
+                        '<div class="list" onclick="network(\'eachList\',null,\''+item.name+'\')">'
                         +'<img src="'+'listIcon.svg" style="fill:'+item.color+'" alt="list'+item.id+' image">'
                         +'<span class="name">'+item.name+'</span>'+'<span class="count">'+item.count+'</span>'+
                         '</div>'
@@ -69,16 +63,13 @@
                             alert("할일을 적어주세요...2자 이상... 좀...");
                             return;
                         }
-                        $.get(URLS.prefix + URLS.groupAdd,{name:name}, renderList);
+                        network("addList",renderList,name);
+                        
                     });
-                    $.get(URLS.prefix + URLS.list, renderList);
+                    network("list",renderList);
                 };
             })();
-            
             init();
-            
-
-            
         </script>
     </body>
 </html>

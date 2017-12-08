@@ -41,55 +41,49 @@
             <img style="width:50px;height:50px" src="https://cdn0.iconfinder.com/data/icons/round-ui-icons/512/add_blue.png" alt="plus button">
         </div>
     </body>
+    <script src="main.js"></script>
     <script>
         var loc = location.href.split("?");
         var loc1 = decodeURI(loc[1]);
         var temp = loc1.split("=");
         var title = "<span>"+temp[1]+"</span>";
 
-        console.log(title);
         $("#title").append(title);
 
-        
-        function makeTask($url){
-            $.get($url,function($data,{name:name} ,status){
-                for(i=0;i<$data.data.length;i++){
-                    var tasks = "";
 
-                    tasks +='<div class="task">'+'<img class="iconImage" onclick="changeComplete(this)" style="width:30px;height:30px;float:left;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYR4sh0fM1Buy__0F9ea9VWazxLdfj9fV0dGCse3mMKiW5UVR-Yw" alt="unchecked">'
-                    tasks +='<span class="name">'+$data.data[i].name+'</span>'
-                    tasks+='</div>'
-                    $("#tasks").append(tasks);
-                }
-            });
-        };
+        var name = location.search.substr(6);
+        // network("taskList",renderTaskList,location.search.substr(6));
+        // makeTask("https://kdy0962.github.io/todo/jsonData/taskList.json");
+        var current;
 
-        makeTask("https://kdy0962.github.io/todo/jsonData/taskList.json");
-
-        $('#addTask').click(function(){
-            var name = prompt("새 할 일의 이름을 입력하세요.");
+        function renderTaskList($data){
+            current = $data.data;
             $("#tasks").empty();
-            makeTask("https://kdy0962.github.io/todo/jsonData/taskAdd.json");
+            var i;
+                for(i=0;i<$data.data.length;i++){
+                    item = current[i];
+                    $("#tasks").append(
+                        '<div class="task">'+'<img class="iconImage" onclick="toggleComplete(this,'+i+')" style="width:30px;height:30px;float:left;" src="'+URLS.icon[item.complete ? 'checked' : 'URLS.icon.unchecked']+ 'alt="'+(item.complete ?'completed':'incompleted')
+                        +'<span class="name">'+item.name+'</span>'
+                        +'</div>'
+                    );
+                }
+        }
+        function init(){
+            $('#addTask').click(function(){
+            var name = prompt("새 할 일의 이름을 입력하세요.");
+            network("taskAdd",renderTaskList, name);
+
+            //makeTask("https://kdy0962.github.io/todo/jsonData/taskAdd.json");
         });
-        var uncheckedIcon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYR4sh0fM1Buy__0F9ea9VWazxLdfj9fV0dGCse3mMKiW5UVR-Yw"
-        var checkedIcon = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ok_sign_font_awesome.svg/2000px-Ok_sign_font_awesome.svg.png";
+        network("taskList",renderTaskList,location.search.substr(6))
+        }
         
         
-        function changeComplete(self){
-            var complete=false;
-            if($(self).attr("alt")=="unchecked"){
-                complete=true;
-                $(self).attr("alt","checked");
-                $(self).attr("src", checkedIcon);
-                $(self).parent().children(".name").css("text-decoration","line-through");
-            }else{
-                complete=false;
-                $(self).attr("alt","unchecked");
-                $(self).attr("src", uncheckedIcon);
-                $(self).parent().children(".name").css("text-decoration","none");
-            }
-            $.get("https://kdy0962.github.io/todo/jsonData/taskList.json",{complete:complete});
-            
+        
+        function toggleComplete(img, i){
+            var item = current[i];
+            network("toggleComplete",renderTaskList,{id:item.tid,complete:complete});            
         };
     </script>
 
