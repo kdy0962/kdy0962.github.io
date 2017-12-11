@@ -63,7 +63,7 @@
                 for(i=0;i<$data.data.length;i++){
                     item = current[i];
                     $("#tasks").append(
-                        '<div class="task">'+'<img class="iconImage" onclick="toggleComplete(this,'+i+')" style="width:30px;height:30px;float:left;" src="'+URLS.icon[item.complete ? 'checked' : 'URLS.icon.unchecked']+ 'alt="'+(item.complete ?'completed':'incompleted')
+                        '<div class="task">'+'<img class="iconImage" onclick="toggleComplete(this,'+i+')" style="width:30px;height:30px;float:left;" src="'+URLS.icon[item.complete ? '.checked' : '.unchecked']+ 'alt="'+(item.complete ?'completed':'incompleted')
                         +'<span class="name">'+item.name+'</span>'
                         +'</div>'
                     );
@@ -85,6 +85,8 @@
             var item = current[i];
             network("toggleComplete",renderTaskList,{id:item.tid,complete:complete});            
         };
+
+        init();
     </script>
 
 </html>

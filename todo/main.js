@@ -1,8 +1,8 @@
 var URLS = {
-    prefix:"localhost/8080", //"https://kdy0962.github.io/todo/",
+    prefix:"https://kdy0962.github.io/todo/",
     icon:{
-        uncheckedIcon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYR4sh0fM1Buy__0F9ea9VWazxLdfj9fV0dGCse3mMKiW5UVR-Yw",
-        checkedIcon = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ok_sign_font_awesome.svg/2000px-Ok_sign_font_awesome.svg.png"
+        unchecked:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYR4sh0fM1Buy__0F9ea9VWazxLdfj9fV0dGCse3mMKiW5UVR-Yw",
+        checked:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ok_sign_font_awesome.svg/2000px-Ok_sign_font_awesome.svg.png"
     },
     list:"jsonData/groupList.json",
     eachList:"list.html",
@@ -18,15 +18,20 @@ function network(command, end, arg){
         break;
     case"addList":
         $.get(URLS.prefix + URLS.groupAdd,{name:arg}, end);
+        console.log("addList");
         /*
         data.data.push({name:arg});
         end(data);
         */
         break;
     case"list":
+         $.get(URLS.prefix + URLS.list, end);
         //$.get(URLS.prefix + URLS.list, end);
-        end(data);
+        // console.log("list");
+        // end(data);
         break;
-    default:throw "invalid command";
+    default:
+        //console.log("def");
+        throw "invalid command";
     }
 }

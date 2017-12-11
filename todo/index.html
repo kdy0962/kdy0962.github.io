@@ -11,6 +11,7 @@
         src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
+        <script src="main.js"></script>
     </head>
     <body>
         <div>
@@ -27,6 +28,7 @@
                 <span style="color:blue">새 목록</span>
             </div>
         </div>
+        <script src="main.js"></script>
         <script>
 
             //this.urls = [];
@@ -50,9 +52,10 @@
                 
                 }
             };
-            var init =(function(){
+            var init =function(){
                 var isInited = false;
-                function init(){
+                network("list",renderList);
+                function initing(){
                     if(isInited) return; else isInited = true;
 
                     //addList를 초기화한다.
@@ -63,12 +66,17 @@
                             alert("할일을 적어주세요...2자 이상... 좀...");
                             return;
                         }
+                        
                         network("addList",renderList,name);
                         
                     });
+                    
                     network("list",renderList);
                 };
-            })();
+                initing();
+                
+            };
+            
             init();
         </script>
     </body>
