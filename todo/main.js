@@ -5,6 +5,8 @@ var URLS = {
         checked:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ok_sign_font_awesome.svg/2000px-Ok_sign_font_awesome.svg.png"
     },
     list:"jsonData/groupList.json",
+    taskList:"jsonData/taskList.json",
+    taskAdd:"jsonData/taskAdd.json",
     eachList:"list.html",
     groupAdd:"jsonData/groupAdd.json"
 };
@@ -29,6 +31,12 @@ function network(command, end, arg){
         //$.get(URLS.prefix + URLS.list, end);
         // console.log("list");
         // end(data);
+        break;
+    case"taskList":
+        $.get(URLS.prefix + URLS.taskList,{name:arg},end);
+        break;
+    case"toggleComplete":
+        $.get(URLS.prefix+URLS.taskList,{complete:arg},end);
         break;
     default:
         //console.log("def");
